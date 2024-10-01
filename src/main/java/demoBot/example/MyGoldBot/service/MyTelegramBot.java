@@ -18,8 +18,20 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()){
+            String messageText = update.getMessage().getText();
+            long chatId = update.getMessage().getChatId();
 
+            switch (messageText){
+                case "/start":
+                    startComandReseived(chatId, update.getMessage().getChat().getFirstName());
+            }
         }
+
+    }
+
+    private void startComandReseived(long chatId, String name){
+
+        String answer = "HI " + name + ", NICE TO MEET YOU!";
 
     }
 
