@@ -4,8 +4,9 @@ package demoBot.example.MyGoldBot.service;
 import demoBot.example.MyGoldBot.config.BotConfig;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.generics.TelegramBot;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class MyTelegramBot extends TelegramLongPollingBot {
@@ -23,16 +24,38 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
             switch (messageText){
                 case "/start":
-                    startComandReseived(chatId, update.getMessage().getChat().getFirstName());
+                    try {
+                        startComandReseived(chatId, update.getMessage().getChat().getFirstName());
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                default:
+                    try {
+                        sendMessage(chatId, "SORRY, command was not!!!");
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
             }
         }
 
     }
 
-    private void startComandReseived(long chatId, String name){
+    private void startComandReseived(long chatId, String name) throws TelegramApiException {
 
         String answer = "HI " + name + ", NICE TO MEET YOU!";
 
+        sendMessage(chatId, answer);
+    }
+    private void sendMessage(long chatId, String textToSend) throws TelegramApiException{
+        SendMessage message = new SendMessage();
+        message.setChatId(String.valueOf(chatId));
+        message.setText(textToSend);
+
+        try {
+            execute(message);
+        } catch (TelegramApiException e){
+
+        }
     }
 
 
