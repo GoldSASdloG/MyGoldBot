@@ -26,6 +26,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 case "/start":
                     try {
                         startComandReseived(chatId, update.getMessage().getChat().getFirstName());
+                        break;
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
