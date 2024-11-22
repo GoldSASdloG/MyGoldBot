@@ -32,7 +32,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                     }
                 default:
                     try {
-                        sendMessage(chatId, "SORRY, command was not!!!");
+                        sendMessage(chatId, "SORRY, КОМАНДА НЕ НАЙДЕНА!!!");
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
@@ -43,7 +43,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private void startComandReseived(long chatId, String name) throws TelegramApiException {
 
-        String answer = "HI " + name + ", NICE TO MEET YOU!";
+        String answer = "ПРИВЕТ " + name + ", КАК ТВОИ ДЕЛА!!!";
 
         sendMessage(chatId, answer);
     }
