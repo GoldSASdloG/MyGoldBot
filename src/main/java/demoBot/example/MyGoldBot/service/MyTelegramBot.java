@@ -30,6 +30,13 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
+                case "/weather":
+                    try {
+                        weatherCommand(chatId, update.getMessage().getChat().getFirstName());
+                        break;
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 default:
                     try {
                         sendMessage(chatId, "SORRY, КОМАНДА НЕ НАЙДЕНА!!!");
@@ -42,6 +49,13 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     }
 
     private void startComandReseived(long chatId, String name) throws TelegramApiException {
+
+        String answer = "ПРИВЕТ " + name + ", КАК ТВОИ ДЕЛА!!!";
+
+        sendMessage(chatId, answer);
+    }
+
+    private void weatherCommand(long chatId, String name) throws TelegramApiException {
 
         String answer = "ПРИВЕТ " + name + ", КАК ТВОИ ДЕЛА!!!";
 
